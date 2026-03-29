@@ -1,0 +1,43 @@
+---
+description: "Dependency management rules — when and how to add/use packages"
+globs: "**/package.json"
+alwaysApply: false
+---
+
+# Dependency Management
+
+## Before Adding a New Dependency
+1. **Check existing utils first**: `packages/utils/`, `packages/common/`, `packages/math/`
+2. **Check if native JS/TS can solve it** — no lodash for simple operations
+3. **Evaluate bundle size impact** — Excalidraw is a lightweight web app
+4. **Get explicit approval** before adding any new npm package
+
+## Existing Key Dependencies (use these, don't add alternatives)
+| Purpose | Package | Notes |
+|---------|---------|-------|
+| Hand-drawn rendering | `roughjs` 4.6.4 | DO NOT replace |
+| Freehand drawing | `perfect-freehand` 1.2.0 | Stroke smoothing |
+| Compression | `pako` 2.0.3 | For file export/import |
+| IDs | `nanoid` 3.3.3 | For element/file IDs |
+| Ordering | `fractional-indexing` 3.2.0 | For element z-order |
+| State | `jotai` 2.11.0 | Per-instance isolation |
+| Code editor | `@codemirror/*` | For code editing features |
+| Collaboration | `socket.io-client` | WebSocket sync |
+| Backend | `firebase` 11.3.1 | Auth, storage, Firestore |
+
+## Package-Specific Rules
+- `excalidraw-app/` — app-specific deps (Firebase, Sentry, socket.io)
+- `packages/excalidraw/` — core library deps (must be minimal for npm consumers)
+- `packages/math/` — ZERO external dependencies (pure math functions)
+- `packages/common/` — ZERO external dependencies (constants and types)
+
+## Yarn Workspaces
+- Use `yarn add` in the correct workspace: `yarn workspace @excalidraw/excalidraw add <pkg>`
+- Never install in root unless it's a dev tool
+- Run `yarn build:packages` after dependency changes
+
+## How to verify
+- No new entries in `package.json` without documented approval
+- `packages/math/package.json` has zero `dependencies` (only `devDependencies`)
+- `packages/common/package.json` has zero `dependencies`
+- `yarn install` completes without errors

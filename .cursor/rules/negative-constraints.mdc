@@ -1,0 +1,54 @@
+---
+description: "Things AI should NEVER do in Excalidraw codebase — prevents hallucinations"
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Negative Constraints
+
+## DOM Access
+- NEVER use `document.getElementById()` — use React refs
+- NEVER use `document.querySelector()` for component state — use Jotai atoms or AppState
+- NEVER directly manipulate DOM for canvas — use the renderer pipeline
+
+## Components
+- DO NOT suggest class components — only functional components with hooks
+- DO NOT use `React.FC` — use plain function declarations with typed props
+- DO NOT create HOCs — use hooks or composition patterns
+
+## Types
+- DO NOT use `any` type — always provide proper types
+- DO NOT use `@ts-ignore` or `@ts-expect-error` without explanation
+- DO NOT create new type files — extend existing ones in `types.ts` or `packages/element/src/types.ts`
+
+## State
+- DO NOT use `useState` for app-level state — use `actionManager` or Jotai atoms
+- DO NOT use `useReducer` for complex state — use the action system
+- DO NOT mutate arrays/objects in state — always create new references
+
+## Tests
+- DO NOT modify test snapshots manually — regenerate with `yarn test -u`
+- DO NOT mock canvas API unless absolutely necessary
+- DO NOT skip tests with `.skip` without a TODO comment
+
+## Dependencies
+- DO NOT add Redux, MobX, Zustand, or any state management library
+- DO NOT add react-konva, fabric.js, pixi.js, or any canvas abstraction
+- DO NOT add lodash — use native JS or existing utils
+
+## Custom Libraries
+### @excalidraw/math — REAL API:
+- `rotatePoint(point, center, angle)` → Point
+- `pointDistance(p1, p2)` → number
+- `normalizeRadians(angle)` → number (0 to 2π)
+
+### @excalidraw/math — DOES NOT EXIST (AI may hallucinate):
+- `Math.rotate()` — not a method
+- `calculateAngle()` — not in this lib
+- `vectorLength()` — use `pointDistance` instead
+
+## How to verify
+- Grep for `document.getElementById` in new code — should find zero
+- Grep for `class.*extends.*Component` in new code — should find zero
+- Grep for `: any` in new code — should find zero (except justified cases)
+- No new state management library imports

@@ -1,0 +1,40 @@
+---
+description: "Code conventions and style guidelines for Excalidraw"
+globs: "packages/**/*.{ts,tsx}"
+alwaysApply: true
+---
+
+# Code Conventions
+
+## Components
+- Functional components ONLY — no class components
+- Props interface naming: `ComponentNameProps`
+- Colocated tests: `ComponentName.test.tsx` next to component
+- Colocated styles: `ComponentName.scss` next to component
+
+## TypeScript
+- TypeScript strict mode — no `any` types
+- Explicit return types for exported functions
+- Use union types and discriminated unions for element types
+- Prefer `ExcalidrawElement` union type from `packages/element/src/types.ts`
+
+## File Naming
+- PascalCase for React components: `ColorPicker.tsx`
+- camelCase for utilities and hooks: `useHistory.ts`, `restore.ts`
+- SCSS files colocated with components: `ColorPicker.scss`
+
+## Imports
+- Use package aliases: `@excalidraw/common`, `@excalidraw/math`, `@excalidraw/element`
+- DO NOT use relative paths crossing package boundaries (e.g., `../../packages/math/`)
+- Use `nanoid()` for ID generation (already a dependency)
+
+## Error Handling
+- Use custom error classes from `packages/excalidraw/errors.ts`
+- CanvasError for rendering issues, AbortError for cancellations
+- Never swallow errors silently — log or rethrow
+
+## How to verify
+- No `class extends React.Component` in new code
+- No `any` type annotations in new code
+- All new components have PascalCase filenames
+- No cross-package relative imports (grep for `../../packages/`)

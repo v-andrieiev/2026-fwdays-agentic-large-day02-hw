@@ -1,0 +1,33 @@
+---
+description: "Protected files that should not be modified without explicit approval"
+globs: "packages/excalidraw/**"
+alwaysApply: true
+---
+
+# Protected Files
+
+NEVER modify these files without explicit approval:
+
+- `packages/excalidraw/data/restore.ts` — file format backward compatibility
+- `packages/excalidraw/actions/manager.ts` — core action system dispatcher
+- `packages/excalidraw/types.ts` — core type definitions (AppState, ExcalidrawElement)
+- `packages/element/src/types.ts` — element type union and interfaces
+- `packages/excalidraw/editor-jotai.ts` — Jotai state isolation setup
+- `packages/excalidraw/renderer/staticScene.ts` — main canvas rendering pipeline
+- `packages/excalidraw/renderer/interactiveScene.ts` — interactive layer rendering
+
+## Why these files are protected
+- `restore.ts`: Ensures backward compatibility with all saved `.excalidraw` files. Breaking changes here corrupt user data.
+- `manager.ts`: Core dispatcher — all 100+ actions depend on it.
+- `types.ts`: Changing core types cascades across the entire codebase.
+- Renderers: Direct canvas manipulation — subtle bugs are hard to detect.
+
+## If you MUST change a protected file
+1. Understand all dependencies (grep for imports of this file)
+2. Run the complete test suite: `yarn test`
+3. Run full build: `yarn build`
+4. Document the change rationale
+
+## How to verify
+- Protected files should not appear in git diff without explicit approval
+- Run `git diff --name-only` and check against this list

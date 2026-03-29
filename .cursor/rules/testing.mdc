@@ -1,0 +1,52 @@
+---
+description: "Testing conventions for Excalidraw — Vitest, patterns, coverage"
+globs: "**/*.test.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing Conventions
+
+## Framework
+- Use **Vitest** — NOT Jest, Mocha, or Jasmine
+- Test runner config: `vitest.config.mts` at root
+- Run tests: `yarn test` (all) or `yarn test packages/excalidraw` (specific)
+
+## Test Structure (AAA Pattern)
+```typescript
+describe("ComponentName", () => {
+  it("should do specific thing", () => {
+    // Arrange — set up test data
+    const element = createTestElement();
+
+    // Act — perform the action
+    const result = processElement(element);
+
+    // Assert — verify the outcome
+    expect(result.type).toBe("rectangle");
+  });
+});
+```
+
+## File Organization
+- Colocate tests with source: `Component.tsx` → `Component.test.tsx`
+- Integration tests in `excalidraw-app/tests/`
+- Use existing test helpers from `packages/excalidraw/tests/helpers/`
+
+## Coverage Thresholds
+- Lines: 60%
+- Branches: 70%
+- Functions: 63%
+- Statements: 60%
+
+## Best Practices
+- Test behavior, not implementation details
+- Use `renderScene` helpers for canvas-related tests
+- DO NOT mock `actionManager` — use the real one with test state
+- Use `createTestElement()` helpers for element fixtures
+- Snapshot tests: regenerate with `yarn test -u`, never edit manually
+
+## How to verify
+- All new tests use `describe/it` from Vitest (not Jest globals)
+- Tests follow AAA pattern (Arrange/Act/Assert sections)
+- No `jest.` API calls in new test files
+- Coverage doesn't drop below thresholds after changes

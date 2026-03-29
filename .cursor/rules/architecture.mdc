@@ -1,0 +1,40 @@
+---
+description: "Architecture constraints for Excalidraw — state management, rendering, monorepo structure"
+globs: "packages/excalidraw/**"
+alwaysApply: true
+---
+
+# Excalidraw Architecture
+
+## State Management
+- Custom state via `actionManager` — **NOT** Redux, Zustand, MobX, or Recoil
+- State updates: `actionManager.dispatch()` ONLY
+- State type: `AppState` (packages/excalidraw/types.ts)
+- NEVER mutate state directly — always create new state objects
+- Per-instance isolation via Jotai atoms (see `editor-jotai.ts`) — Jotai is used internally, do NOT replace it with another state library
+
+## Rendering
+- Canvas-based rendering via RoughJS — **NOT** DOM-based
+- DO NOT use react-konva, fabric.js, pixi.js, or any other canvas library
+- Multi-layer canvas architecture: static scene, interactive scene, new-element scene
+- SVG export uses separate rendering path (`staticSvgScene.ts`)
+
+## Monorepo Structure
+- `packages/excalidraw/` — core React component library (published to npm)
+- `packages/element/` — element types and operations
+- `packages/math/` — geometry utilities (pure functions, no side effects)
+- `packages/common/` — shared constants and types
+- `packages/utils/` — helper functions
+- `excalidraw-app/` — full-featured web application
+
+## Dependencies
+- No new npm packages without explicit approval
+- Check `packages/utils/` and `packages/common/` before adding external helpers
+- Build order matters: common → math → element → excalidraw → excalidraw-app
+
+## How to verify
+- Search for `new Redux` or `createStore` — should find zero
+- Search for direct state mutations (e.g., `this.state.elements =`) — should find zero
+- All state changes go through `actionManager` or existing Jotai atom setters
+- No react-konva/fabric.js/pixi.js imports exist
+- Jotai is used for per-instance isolation — do NOT add Redux/Zustand/MobX/Recoil as replacement
