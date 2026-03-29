@@ -1,0 +1,41 @@
+# Excalidraw — Legacy Cursor Rules
+# For modern rules, see .cursor/rules/*.mdc
+
+## Project
+- TypeScript/React monorepo with Yarn workspaces
+- React 19, TypeScript 5.9 (strict), Vite 5, Vitest
+
+## Architecture
+- State: custom `actionManager` — NOT Redux/Zustand/MobX/Recoil
+- Jotai used internally for per-instance isolation (`editor-jotai.ts`) — do not replace
+- Rendering: Canvas via RoughJS — NOT react-konva/fabric.js/pixi.js
+- Monorepo build order: common → math → element → excalidraw → excalidraw-app
+
+## Code Style
+- Functional components only, no classes
+- TypeScript strict, no `any`
+- PascalCase components, camelCase utilities
+- Colocated tests (*.test.tsx) and styles (*.scss)
+- Vitest for tests (not Jest)
+
+## Constraints
+- No new npm deps without approval
+- No direct state mutation — use actionManager.dispatch()
+- No modifications to restore.ts, manager.ts, types.ts without approval
+- Check packages/utils/ and packages/common/ before adding helpers
+
+## Commands
+- `yarn install` — install deps
+- `yarn build:packages` — build shared packages (run before app)
+- `yarn start` — dev server on :3001
+- `yarn test` — Vitest tests
+- `yarn fix` — ESLint + Prettier
+
+## Protected Files
+- packages/excalidraw/data/restore.ts
+- packages/excalidraw/actions/manager.ts
+- packages/excalidraw/types.ts
+- packages/element/src/types.ts
+- packages/excalidraw/editor-jotai.ts
+- packages/excalidraw/renderer/staticScene.ts
+- packages/excalidraw/renderer/interactiveScene.ts
