@@ -25,10 +25,10 @@ Triggered by: "update memory bank", "refresh project docs", "sync documentation"
    - `decisionLog.md` — architectural decisions
 
 3. **For each changed area, update the matching file**:
-   - New dependency? → update `techContext.md`
-   - Architecture change? → update `systemPatterns.md`
+   - New dependency? → update `techContext.md` (verify against monorepo build order: common → math → element → excalidraw)
+   - Architecture change? → update `systemPatterns.md` (note actionManager patterns, canvas rendering pipeline)
    - New feature? → update `productContext.md` and `progress.md`
-   - New decision? → add to `decisionLog.md`
+   - New decision? → add to `decisionLog.md` (note if protected files are affected: `restore.ts`, `manager.ts`, `types.ts`)
    - New active work? → update `activeContext.md`
 
 4. **Cross-reference** — ensure links between docs are consistent

@@ -14,6 +14,12 @@ When the user provides a module path or name, investigate it thoroughly:
    - What other modules import from this one?
 5. **Map the data flow**: entry point → processing → output
 6. **Check for tests**: are there colocated test files?
+7. **Excalidraw-specific checks**:
+   - Which monorepo package does this module belong to? (common / math / element / excalidraw / excalidraw-app)
+   - Does it use `actionManager.dispatch()` or mutate state directly?
+   - Does it use Jotai atoms (`editor-jotai.ts`) for state isolation?
+   - Does it involve canvas rendering via RoughJS?
+   - Does it depend on protected files (`restore.ts`, `manager.ts`, `types.ts`)?
 
 ## Output format
 Provide a structured summary:
@@ -25,6 +31,10 @@ Provide a structured summary:
 - **Dependencies**: what it uses
 - **Dependents**: what uses it
 - **Test coverage**: yes/no, test file locations
+- **Monorepo package**: which package in the build chain
+- **State management**: actionManager.dispatch() / Jotai atoms / direct mutation
+- **Rendering**: RoughJS canvas usage if any
+- **Protected file deps**: restore.ts / manager.ts / types.ts if referenced
 - **Notes**: anything unusual or important
 
 **IMPORTANT**: This is a READ-ONLY exploration. Do NOT modify any files.

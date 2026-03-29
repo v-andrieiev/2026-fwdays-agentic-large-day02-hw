@@ -38,11 +38,13 @@ alwaysApply: false
 
 ## Custom Libraries
 ### @excalidraw/math — REAL API:
-- `rotatePoint(point, center, angle)` → Point
+- `pointRotateRads(point, center, angle)` → Point
+- `pointRotateDegs(point, center, angle)` → Point
 - `pointDistance(p1, p2)` → number
-- `normalizeRadians(angle)` → number (0 to 2π)
 
 ### @excalidraw/math — DOES NOT EXIST (AI may hallucinate):
+- `rotatePoint()` — use `pointRotateRads` or `pointRotateDegs` instead
+- `normalizeRadians()` — not in this lib
 - `Math.rotate()` — not a method
 - `calculateAngle()` — not in this lib
 - `vectorLength()` — use `pointDistance` instead

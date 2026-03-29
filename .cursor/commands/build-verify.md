@@ -10,7 +10,7 @@ Run the following steps in order:
 
 1. `yarn build:packages` — build shared packages (dependency order)
 2. `yarn workspace @excalidraw/excalidraw tsc --noEmit` — TypeScript check
-3. `yarn fix --dry-run` — lint check
+3. `yarn test:other && yarn test:code` — formatting + lint check
 4. `yarn test --run` — run tests
 
 Report: Build / TypeScript / Lint / Tests — PASS or FAIL with details.
