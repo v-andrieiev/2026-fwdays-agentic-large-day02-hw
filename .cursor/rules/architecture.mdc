@@ -8,7 +8,7 @@ alwaysApply: true
 
 ## State Management
 - Custom state via `actionManager` — **NOT** Redux, Zustand, MobX, or Recoil
-- State updates: `actionManager.dispatch()` ONLY
+- State updates: `actionManager.executeAction()` ONLY
 - State type: `AppState` (packages/excalidraw/types.ts)
 - NEVER mutate state directly — always create new state objects
 - Per-instance isolation via Jotai atoms (see `editor-jotai.ts`) — Jotai is used internally, do NOT replace it with another state library

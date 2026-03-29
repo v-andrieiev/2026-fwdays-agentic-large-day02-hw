@@ -16,7 +16,7 @@ Triggered by: "investigate", "how does X work?", "explain this module", "underst
 2. **Read README or top-level comments** in the area
 3. **Map the key files** and their responsibilities
 4. **Check Excalidraw patterns**:
-   - Does it use `actionManager.dispatch()` for state updates?
+   - Does it use `actionManager.executeAction()` for state updates?
    - Is it part of canvas rendering (RoughJS usage)?
    - Which monorepo package does it belong to?
    - Does it depend on protected files (`restore.ts`, `manager.ts`, `types.ts`)?
