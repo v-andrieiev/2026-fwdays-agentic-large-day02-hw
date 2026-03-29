@@ -1,6 +1,6 @@
 ---
 description: "Architecture constraints for Excalidraw — state management, rendering, monorepo structure"
-globs: "packages/**"
+globs: "{packages/**,excalidraw-app/**}"
 alwaysApply: true
 ---
 

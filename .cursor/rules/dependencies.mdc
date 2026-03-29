@@ -28,7 +28,7 @@ alwaysApply: false
 ## Package-Specific Rules
 - `excalidraw-app/` — app-specific deps (Firebase, Sentry, socket.io)
 - `packages/excalidraw/` — core library deps (must be minimal for npm consumers)
-- `packages/math/` — ZERO external dependencies (pure math functions)
+- `packages/math/` — no external dependencies (only internal `@excalidraw/common`); pure math functions
 - `packages/common/` — minimal external dependencies (only `tinycolor2`); avoid adding new ones without approval
 
 ## Yarn Workspaces
@@ -38,6 +38,6 @@ alwaysApply: false
 
 ## How to verify
 - No new entries in `package.json` without documented approval
-- `packages/math/package.json` has zero `dependencies` (only `devDependencies`)
+- `packages/math/package.json` has only `@excalidraw/common` in `dependencies`
 - `packages/common/package.json` has only `tinycolor2` in `dependencies`
 - `yarn install` completes without errors
