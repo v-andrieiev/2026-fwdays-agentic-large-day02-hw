@@ -33,7 +33,7 @@ alwaysApply: true
 - Build order matters: common → math → element → excalidraw → excalidraw-app
 
 ## How to verify
-- Search for `new Redux` or `createStore` — should find zero
+- Search for imports of `redux`, `zustand`, `mobx`, `recoil` — should find zero
 - Search for direct state mutations (e.g., `this.state.elements =`) — should find zero
 - All state changes go through `actionManager` or existing Jotai atom setters
 - No react-konva/fabric.js/pixi.js imports exist

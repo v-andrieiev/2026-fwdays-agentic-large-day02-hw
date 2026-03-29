@@ -22,9 +22,11 @@ When the user provides a module path or name, investigate it thoroughly:
    - Does it depend on protected files (`restore.ts`, `manager.ts`, `types.ts`)?
 
 ## Output format
+
 Provide a structured summary:
 
 ### Module: [name]
+
 - **Purpose**: one-line description
 - **Key files**: list with brief descriptions
 - **Exports**: main public API
